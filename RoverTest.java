@@ -7,15 +7,12 @@ import org.junit.Test;
 public class RoverTest {
     private Rover rover;
 
-    @Test
-    public void moveNorth() {
-        givenRoverAt(1, 1, 'N');
-        whenExecuting("F");
-        thenRoverShouldBeAt(1, 0, 'N');
-    }
-
     private void givenRoverAt(int x, int y, char n) {
         rover = new Rover(100, 100, x, y, n);
+    }
+
+    private void givenObstacleAt(int x, int y) {
+        rover.addObstacleAt(x, y);
     }
 
     private void whenExecuting(String commands) {
@@ -26,6 +23,13 @@ public class RoverTest {
         assertEquals(x, rover.x());
         assertEquals(expected, rover.y());
         assertEquals(direction, rover.direction());
+    }
+
+    @Test
+    public void moveNorth() {
+        givenRoverAt(1, 1, 'N');
+        whenExecuting("F");
+        thenRoverShouldBeAt(1, 0, 'N');
     }
 
     @Test
@@ -201,10 +205,6 @@ public class RoverTest {
         givenRoverAt(9, 9, 'N');
         givenObstacleAt(10, 9);
         whenExecuting("LB");
-    }
-
-    private void givenObstacleAt(int x, int y) {
-        rover.addObstacleAt(x, y);
     }
 
     @Test(expected = ObstacleFoundException.class)
